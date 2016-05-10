@@ -1,6 +1,10 @@
 var mongoose = require( 'mongoose' );
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/Loc8r';
+if(process.env.NODE_ENV === 'production') {
+	//dbURI = 'mongodb://Loc8r:7282bugg@ds015902.mlab.com:15902/heroku_l2156wv3';
+	dbURI = process.env.MONGOLAB_URI;
+}
 mongoose.connect(dbURI);
 
 var readLine = require("readline");
@@ -49,3 +53,5 @@ process.once('SIGTERM', function(){
 		process.exit(0);
 	});
 });
+
+require('./locations');
