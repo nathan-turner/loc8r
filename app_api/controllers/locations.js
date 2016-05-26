@@ -36,7 +36,7 @@ module.exports.locationsListByDistance = function (req, res) {
 		num: 10
 	};
 	if(!lng || !lat) {
-		sendJsonResponse(res, 404, { "message" : "lng and late query parameters are required" });
+		sendJsonResponse(res, 404, { "message" : "lng and lat query parameters are required" });
 		return;
 	}
 	Loc.geoNear(point, geoOptions, function(err, results, stats) {
@@ -54,6 +54,14 @@ module.exports.locationsListByDistance = function (req, res) {
 					_id: doc.obj._id
 				});
 			});
+			locations.push({ /*add fake location*/
+					distance: 333,
+					name: "test",
+					address: "test",
+					rating: 3,
+					facilities: ["test"],
+					_id: "test"
+				});
 			sendJsonResponse(res, 200, locations);
 		}
 	});
@@ -89,7 +97,7 @@ module.exports.locationsCreate = function (req, res) {
 	//sendJsonResponse(res, 200, {"status" : "success"});
 };
 
-module.exports.locationsReadOne = function (req, res) {
+module.exports.locationsReadOne = function (req, res) {	
 	if (req.params && req.params.locationid){
 			Loc.findById(req.params.locationid).exec(function(err, location) {
 				if(!location) {
