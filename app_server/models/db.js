@@ -5,6 +5,7 @@ if(process.env.NODE_ENV === 'production') {
 	//dbURI = 'mongodb://Loc8r:7282bugg@ds015902.mlab.com:15902/heroku_l2156wv3';
 	dbURI = process.env.MONGODB_URI;
 }
+dbURI = process.env.MONGODB_URI;
 mongoose.connect(dbURI);
 
 var readLine = require("readline");
